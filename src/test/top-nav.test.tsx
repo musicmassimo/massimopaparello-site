@@ -26,7 +26,6 @@ describe("TopNav — structure", () => {
     for (const label of [
       "HOME",
       "ABOUT",
-      "TEACHING",
       "MUSIC",
       "GALLERY",
       "LIVE",
@@ -36,19 +35,16 @@ describe("TopNav — structure", () => {
     }
   });
 
+  it("no longer renders the removed TEACHING entry", () => {
+    renderNav();
+    expect(within(desktopNav()).queryByText("TEACHING")).toBeNull();
+  });
+
   it("points LIVE at the existing /tour route", () => {
     renderNav();
     expect(within(desktopNav()).getByText("LIVE").closest("a")).toHaveAttribute(
       "href",
       "/tour"
-    );
-  });
-
-  it("points TEACHING at /teaching", () => {
-    renderNav();
-    expect(within(desktopNav()).getByText("TEACHING").closest("a")).toHaveAttribute(
-      "href",
-      "/teaching"
     );
   });
 

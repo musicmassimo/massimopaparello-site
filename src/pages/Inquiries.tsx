@@ -1,3 +1,4 @@
+import { useState } from "react";
 import TopNav from "@/components/TopNav";
 import { publicAsset } from "@/lib/asset";
 
@@ -10,6 +11,7 @@ const contacts = [
 const socials = [
   { label: "Instagram", handle: "@musicmassimo", href: "https://www.instagram.com/musicmassimo/" },
   { label: "YouTube", handle: "@massimopaparello0213", href: "https://youtube.com/@massimopaparello0213" },
+  { label: "TikTok", handle: "@massimo.paparello", href: "https://www.tiktok.com/@massimo.paparello" },
   { label: "Facebook", handle: "orangefoot13", href: "https://www.facebook.com/orangefoot13/" },
   { label: "Threads", handle: "@musicmassimo", href: "https://www.threads.com/@musicmassimo" },
 ];
@@ -56,6 +58,181 @@ const rowCss = `
   }
 `;
 
+const field: React.CSSProperties = {
+  width: "100%",
+  background: "transparent",
+  border: 0,
+  borderBottom: "1px solid rgba(255,255,255,0.4)",
+  color: "#fff",
+  fontFamily: "'Space Grotesk', monospace",
+  fontSize: 13,
+  letterSpacing: "0.05em",
+  padding: "10px 0",
+  outline: "none",
+};
+
+const fieldLabel: React.CSSProperties = {
+  display: "block",
+  fontSize: 10,
+  letterSpacing: "0.3em",
+  textTransform: "uppercase",
+  color: "rgba(255,255,255,0.4)",
+  marginBottom: 10,
+};
+
+type Status = "idle" | "sending" | "ok" | "error";
+
+const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  // Honeypot: real users never see or fill this. A non-empty value on submit
+  // means a bot, so we silently accept without sending.
+  const [website, setWebsite] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "sending") return;
+
+    if (website.trim() !== "") {
+      // Pretend it worked; drop the submission.
+      setStatus("ok");
+      setName("");
+      setEmail("");
+      setMessage("");
+      return;
+    }
+
+    setStatus("sending");
+    setError("");
+    try {
+      const res = await fetch(`${import.meta.env.BASE_URL}contact.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, website }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || (data && data.ok === false)) {
+        throw new Error((data && data.error) || `Unable to send (${res.status}).`);
+      }
+      setStatus("ok");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err) {
+      setStatus("error");
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  };
+
+  const btnBg = status === "sending" ? "rgba(255,255,255,0.1)" : "transparent";
+
+  return (
+    <form
+      onSubmit={onSubmit}
+      style={{ display: "flex", flexDirection: "column", gap: 28, maxWidth: 520 }}
+    >
+      <div>
+        <label htmlFor="cf-name" style={fieldLabel}>Name</label>
+        <input
+          id="cf-name"
+          type="text"
+          required
+          value={name}
+          onChange={e => setName(e.target.value)}
+          style={field}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="cf-email" style={fieldLabel}>Email</label>
+        <input
+          id="cf-email"
+          type="email"
+          required
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          style={field}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="cf-message" style={fieldLabel}>Message</label>
+        <textarea
+          id="cf-message"
+          required
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          rows={5}
+          style={{
+            ...field,
+            border: "1px solid rgba(255,255,255,0.2)",
+            padding: 12,
+            minHeight: 120,
+            resize: "vertical",
+            lineHeight: 1.7,
+          }}
+        />
+      </div>
+
+      {/* Honeypot — hidden from humans, ignored by assistive tech, left empty. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={website}
+        onChange={e => setWebsite(e.target.value)}
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
+
+      <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          style={{
+            border: "1px solid rgba(255,255,255,0.4)",
+            background: btnBg,
+            color: "#fff",
+            fontFamily: "'Space Grotesk', monospace",
+            fontSize: 10,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            padding: "11px 24px",
+            cursor: status === "sending" ? "default" : "pointer",
+            transition: "background 0.2s, color 0.2s",
+          }}
+          onMouseEnter={e => {
+            if (status === "sending") return;
+            e.currentTarget.style.background = "#fff";
+            e.currentTarget.style.color = "#000";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = btnBg;
+            e.currentTarget.style.color = "#fff";
+          }}
+        >
+          {status === "sending" ? "Sending…" : "Send"}
+        </button>
+
+        {status === "ok" && (
+          <span style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)" }}>
+            Thanks — your message is on its way.
+          </span>
+        )}
+        {status === "error" && (
+          <span style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)" }}>
+            {error || "Something went wrong."} Email massimo@massimopaparello.com instead.
+          </span>
+        )}
+      </div>
+    </form>
+  );
+};
+
 const Inquiries = () => {
   return (
     <main style={{ background: "#000", color: "#fff", fontFamily: "'Space Grotesk', monospace", minHeight: "100vh", overflowX: "hidden" }}>
@@ -93,6 +270,12 @@ const Inquiries = () => {
             </HoverRow>
           ))}
         </div>
+      </section>
+
+      {/* Contact form */}
+      <section style={{ padding: "0 24px 80px", maxWidth: 800, margin: "0 auto", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 60 }}>
+        <p style={{ ...s.label, marginBottom: 32 }}>Send a Message</p>
+        <ContactForm />
       </section>
 
       {/* Socials */}

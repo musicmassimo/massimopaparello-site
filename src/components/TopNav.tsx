@@ -25,9 +25,6 @@ const isGroup = (entry: NavEntry): entry is NavGroup => "children" in entry;
 const navItems: NavEntry[] = [
   { label: "HOME", to: "/" },
   { label: "ABOUT", to: "/about" },
-  // Teaching lives in a separate WordPress install in a /teaching subfolder
-  // on the same domain — a real page load, not a client-side route.
-  { label: "TEACHING", to: "/teaching", external: true },
   { label: "MUSIC", to: "/music" },
   {
     label: "GALLERY",

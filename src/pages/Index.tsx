@@ -1,10 +1,32 @@
-import { Instagram, Youtube } from "lucide-react"
+import type { ComponentType } from "react"
+import { Instagram, Youtube, type LucideProps } from "lucide-react"
 import TopNav from "@/components/TopNav"
 import { publicAsset } from "@/lib/asset"
 
-const socialLinks = [
+// lucide-react ships no TikTok glyph, so this is a hand-drawn stroke icon that
+// matches the weight and 24x24 grid of the lucide Instagram/YouTube icons and
+// honours the same `size` / `strokeWidth` props the map below passes.
+const TikTok = ({ size = 24, strokeWidth = 2 }: LucideProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+)
+
+const socialLinks: { label: string; href: string; Icon: ComponentType<LucideProps> }[] = [
   { label: "Instagram", href: "https://www.instagram.com/musicmassimo/", Icon: Instagram },
   { label: "YouTube", href: "https://youtube.com/@massimopaparello0213", Icon: Youtube },
+  { label: "TikTok", href: "https://www.tiktok.com/@massimo.paparello", Icon: TikTok },
 ]
 
 const Index = () => {

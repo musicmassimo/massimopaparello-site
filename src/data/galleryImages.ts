@@ -66,4 +66,22 @@ export const galleryImages: MediaItem[] = [
     alt: "Massimo Paparello",
     objectPosition: "80% center",
   },
+  {
+    src: publicAsset("images/massimo-08.jpg"),
+    width: 4,
+    height: 5,
+    alt: "Massimo Paparello",
+  },
+  {
+    src: publicAsset("images/massimo-11.jpg"),
+    width: 4,
+    height: 5,
+    alt: "Massimo Paparello",
+  },
+  {
+    src: publicAsset("images/massimo-12.jpg"),
+    width: 4,
+    height: 5,
+    alt: "Massimo Paparello",
+  },
 ]

@@ -51,8 +51,16 @@ const Calendar = () => {
                 {d.city ? `${d.venue} · ${d.city}` : d.venue}
               </p>
               <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em" }}>
-                {d.date}
+                {d.time ? `${d.date} · ${d.time}` : d.date}
               </span>
+              {d.note && (
+                <span
+                  className="block"
+                  style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", textTransform: "uppercase" }}
+                >
+                  {d.note}
+                </span>
+              )}
             </div>
 
             {/* CTA */}
