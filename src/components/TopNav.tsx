@@ -42,11 +42,11 @@ const navItems: NavEntry[] = [
 
 const linkFont = {
   fontSize: 11,
-  fontWeight: 400,
+  fontWeight: 700,
   letterSpacing: "0.18em",
   textTransform: "uppercase" as const,
   textDecoration: "none",
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'Silkscreen', cursive",
 };
 
 const ACTIVE = "#fff";

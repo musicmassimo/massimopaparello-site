@@ -49,11 +49,15 @@ const Index = () => {
           <h1
             className="text-white"
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 400,
-              fontSize: "clamp(2.75rem, 8vw, 5.5rem)",
+              fontFamily: "'Silkscreen', cursive",
+              fontWeight: 700,
+              // Silkscreen is a blocky pixel face and runs much wider than the
+              // old serif, so the clamp min/slope are pulled down to keep
+              // "MASSIMO PAPARELLO" on one line down to ~360px viewports.
+              fontSize: "clamp(1.25rem, 5vw, 3rem)",
               letterSpacing: "0.03em",
               lineHeight: 1.05,
+              textTransform: "uppercase",
             }}
           >
             Massimo Paparello
