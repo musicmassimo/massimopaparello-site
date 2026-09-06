@@ -1,6 +1,10 @@
 import { useState } from "react";
-import TopNav from "@/components/TopNav";
-import { publicAsset } from "@/lib/asset";
+import { sectionHeading, sectionInner, sectionKicker, sectionShell } from "./sectionStyles";
+
+// The "Inquiries" section — was the standalone Inquiries route. Booking contact
+// rows, a real contact form that POSTs to public/contact.php, and the social
+// links. The old per-page 60vh photo banner is dropped now that the homepage
+// hero covers that job.
 
 const contacts = [
   { label: "General, Bookings & Teaching", value: "massimo@massimopaparello.com", href: "mailto:massimo@massimopaparello.com" },
@@ -19,7 +23,6 @@ const socials = [
 const s = {
   label: { fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.4)" },
   row: { fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.7)", transition: "opacity 0.3s", cursor: "default" },
-  footer: { fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.3)" },
 };
 
 const HoverRow = ({ children, style, onClick, className }: { children: React.ReactNode; style?: React.CSSProperties; onClick?: () => void; className?: string }) => (
@@ -78,6 +81,12 @@ const fieldLabel: React.CSSProperties = {
   textTransform: "uppercase",
   color: "rgba(255,255,255,0.4)",
   marginBottom: 10,
+};
+
+const subGroup: React.CSSProperties = {
+  borderTop: "1px solid rgba(255,255,255,0.08)",
+  marginTop: 60,
+  paddingTop: 60,
 };
 
 type Status = "idle" | "sending" | "ok" | "error";
@@ -233,53 +242,33 @@ const ContactForm = () => {
   );
 };
 
-const Inquiries = () => {
-  return (
-    <main style={{ background: "#000", color: "#fff", fontFamily: "'Space Grotesk', monospace", minHeight: "100vh", overflowX: "hidden" }}>
-      <style>{rowCss}</style>
-      <TopNav />
+const InquiriesSection = () => (
+  <section id="inquiries" style={{ ...sectionShell, overflowX: "hidden" }}>
+    <style>{rowCss}</style>
+    <div style={{ ...sectionInner, maxWidth: 800 }}>
+      <p style={sectionKicker}>Get In Touch</p>
+      <h2 style={sectionHeading}>Inquiries</h2>
 
-      {/* Header banner */}
-      <section style={{ position: "relative", height: "60vh", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <img
-          src={publicAsset("images/massimo-11.jpg")}
-          alt="Massimo Paparello"
-          loading="eager"
-          decoding="async"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)" }} />
-        <div style={{ position: "relative", width: "100%", maxWidth: 400, display: "flex", justifyContent: "space-between", padding: "0 20px" }}>
-          <span style={{ fontSize: 20, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.9)" }}>get in</span>
-          <span style={{ fontSize: 20, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff" }}>TOUCH</span>
-        </div>
-      </section>
+      <p style={{ ...s.label, marginBottom: 32 }}>Booking &amp; Management</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {contacts.map((c, i) => (
+          <HoverRow key={i} className="cx-row">
+            <span>{c.label}</span>
+            {c.href ? (
+              <a href={c.href} style={{ color: "inherit", textDecoration: "none" }}>{c.value}</a>
+            ) : (
+              <span>{c.value}</span>
+            )}
+          </HoverRow>
+        ))}
+      </div>
 
-      {/* Inquiries rows */}
-      <section style={{ padding: "0 24px 80px", maxWidth: 800, margin: "0 auto" }}>
-        <p style={{ ...s.label, marginBottom: 32 }}>Booking & Management</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {contacts.map((c, i) => (
-            <HoverRow key={i} className="cx-row">
-              <span>{c.label}</span>
-              {c.href ? (
-                <a href={c.href} style={{ color: "inherit", textDecoration: "none" }}>{c.value}</a>
-              ) : (
-                <span>{c.value}</span>
-              )}
-            </HoverRow>
-          ))}
-        </div>
-      </section>
-
-      {/* Contact form */}
-      <section style={{ padding: "0 24px 80px", maxWidth: 800, margin: "0 auto", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 60 }}>
+      <div style={subGroup}>
         <p style={{ ...s.label, marginBottom: 32 }}>Send a Message</p>
         <ContactForm />
-      </section>
+      </div>
 
-      {/* Socials */}
-      <section style={{ padding: "0 24px 80px", maxWidth: 800, margin: "0 auto", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 60 }}>
+      <div style={subGroup}>
         <p style={{ ...s.label, marginBottom: 32 }}>Follow Massimo Paparello</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {socials.map((item, i) => (
@@ -296,14 +285,9 @@ const Inquiries = () => {
             </HoverRow>
           ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+);
 
-    {/* Footer */}
-    <footer style={{ padding: "40px 24px", textAlign: "center", ...s.footer }}>
-      © 2026 Massimo Paparello. All rights reserved.
-    </footer>
-    </main>
-  );
-};
-
-export default Inquiries;
+export default InquiriesSection;

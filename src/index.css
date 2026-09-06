@@ -102,5 +102,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Smooth scrolling is driven by TopNav's JS scrollIntoView({behavior:"smooth"})
+     call — NOT also here. Stacking a CSS `scroll-behavior: smooth` on top of the
+     scripted smooth scroll makes rapid nav clicks fight each other and can wedge
+     scrolling in Chromium, so the CSS keyword is deliberately omitted. */
+  /* Offset anchored sections so their tops clear the fixed 44px TopNav. */
+  scroll-padding-top: 64px;
 }

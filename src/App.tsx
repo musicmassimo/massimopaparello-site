@@ -6,18 +6,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { toRouterBasename } from "@/lib/routerBasename";
 
-// The landing page stays eagerly imported: it is the most common entry point
-// and its intro animation is timed from first paint, so a Suspense fallback
-// flash there would be visible. Every other route is code-split and only
-// fetched when a visitor actually navigates to it.
+// The site is a single continuously-scrolling homepage: the hero plus Shows,
+// Bio, Gallery, Music and Inquiries as anchor-scroll sections (see
+// src/components/sections). Only "/" and the 404 catch-all remain as routes.
+// Index is eagerly imported — it is the entry point and its intro is timed from
+// first paint, so a Suspense fallback flash would be visible.
 import Index from "./pages/Index";
-
-const Calendar = lazy(() => import("./pages/Calendar"));
-const Music = lazy(() => import("./pages/Music"));
-const GalleryPhotos = lazy(() => import("./pages/GalleryPhotos"));
-const Videos = lazy(() => import("./pages/Videos"));
-const About = lazy(() => import("./pages/About"));
-const Inquiries = lazy(() => import("./pages/Inquiries"));
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -44,12 +38,6 @@ const App = () => (
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/tour" element={<Calendar />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/gallery/photos" element={<GalleryPhotos />} />
-            <Route path="/gallery/videos" element={<Videos />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/inquiries" element={<Inquiries />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

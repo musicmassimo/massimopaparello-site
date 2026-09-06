@@ -1,17 +1,13 @@
-import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup, within } from "@testing-library/react";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { render, cleanup, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
 import TopNav from "@/components/TopNav";
 
-const renderNav = (initialPath = "/") =>
-  render(
-    <MemoryRouter initialEntries={[initialPath]}>
-      <TopNav />
-    </MemoryRouter>
-  );
-
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  document.body.querySelectorAll("section[data-test-section]").forEach(el => el.remove());
+});
 
 // The desktop and mobile trees are both in the DOM under jsdom (Tailwind's
 // responsive classes aren't evaluated), so queries are scoped to the relevant
@@ -19,102 +15,58 @@ afterEach(cleanup);
 const desktopNav = () => document.querySelector(".md\\:flex") as HTMLElement;
 const mobileNav = () => document.querySelector(".md\\:hidden") as HTMLElement;
 
+const LABELS = ["HOME", "ABOUT", "MUSIC", "GALLERY", "LIVE", "INQUIRIES"];
+
+const addSection = (id: string) => {
+  const el = document.createElement("section");
+  el.id = id;
+  el.setAttribute("data-test-section", "");
+  document.body.appendChild(el);
+  return el;
+};
+
 describe("TopNav — structure", () => {
-  it("renders every top-level entry in the desktop bar", () => {
-    renderNav();
+  it("renders all six section links in the desktop bar", () => {
+    render(<TopNav />);
     const bar = within(desktopNav());
-    for (const label of [
-      "HOME",
-      "ABOUT",
-      "MUSIC",
-      "GALLERY",
-      "LIVE",
-      "INQUIRIES",
-    ]) {
+    for (const label of LABELS) {
       expect(bar.getByText(label)).toBeInTheDocument();
     }
   });
 
   it("no longer renders the removed TEACHING entry", () => {
-    renderNav();
+    render(<TopNav />);
     expect(within(desktopNav()).queryByText("TEACHING")).toBeNull();
-  });
-
-  it("points LIVE at the existing /tour route", () => {
-    renderNav();
-    expect(within(desktopNav()).getByText("LIVE").closest("a")).toHaveAttribute(
-      "href",
-      "/tour"
-    );
-  });
-
-  it("points MUSIC at the existing /music route", () => {
-    renderNav();
-    expect(within(desktopNav()).getByText("MUSIC").closest("a")).toHaveAttribute(
-      "href",
-      "/music"
-    );
-  });
-
-  it("keeps dropdown children hidden until opened", () => {
-    renderNav();
-    expect(within(desktopNav()).queryByText("PHOTOS")).toBeNull();
   });
 });
 
-describe("TopNav — desktop dropdowns", () => {
-  it("opens GALLERY on click with both PHOTOS and VIDEOS", async () => {
+describe("TopNav — smooth-scroll anchors", () => {
+  it("scrolls to the matching section id on click", async () => {
     const user = userEvent.setup();
-    renderNav();
-    const bar = within(desktopNav());
+    const music = addSection("music");
+    const spy = vi.spyOn(music, "scrollIntoView").mockImplementation(() => {});
 
-    await user.click(bar.getByText("GALLERY"));
+    render(<TopNav />);
+    await user.click(within(desktopNav()).getByText("MUSIC"));
 
-    expect(bar.getByText("PHOTOS").closest("a")).toHaveAttribute(
-      "href",
-      "/gallery/photos"
-    );
-    expect(bar.getByText("VIDEOS").closest("a")).toHaveAttribute(
-      "href",
-      "/gallery/videos"
-    );
+    expect(spy).toHaveBeenCalledWith({ behavior: "smooth" });
   });
 
-  it("closes an open dropdown on Escape", async () => {
+  it("scrolls to the top of the page for HOME", async () => {
     const user = userEvent.setup();
-    renderNav();
-    const bar = within(desktopNav());
+    const spy = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
 
-    await user.click(bar.getByText("GALLERY"));
-    expect(bar.getByText("PHOTOS")).toBeInTheDocument();
+    render(<TopNav />);
+    await user.click(within(desktopNav()).getByText("HOME"));
 
-    await user.keyboard("{Escape}");
-    expect(bar.queryByText("PHOTOS")).toBeNull();
-  });
-
-  it("closes an open dropdown when clicking outside the nav", async () => {
-    const user = userEvent.setup();
-    renderNav();
-    const bar = within(desktopNav());
-
-    await user.click(bar.getByText("GALLERY"));
-    expect(bar.getByText("PHOTOS")).toBeInTheDocument();
-
-    await user.click(document.body);
-    expect(bar.queryByText("PHOTOS")).toBeNull();
-  });
-
-  it("marks a group active when one of its children is the current route", () => {
-    renderNav("/gallery/photos");
-    const trigger = within(desktopNav()).getByText("GALLERY").closest("button")!;
-    expect(trigger).toHaveStyle({ color: "rgb(255, 255, 255)" });
+    expect(spy).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
   });
 });
 
 describe("TopNav — mobile hamburger", () => {
   it("hides the menu until the hamburger is tapped", async () => {
     const user = userEvent.setup();
-    renderNav();
+    render(<TopNav />);
     const mobile = within(mobileNav());
 
     expect(mobile.queryByText("HOME")).toBeNull();
@@ -123,30 +75,16 @@ describe("TopNav — mobile hamburger", () => {
     expect(mobile.getByText("HOME")).toBeInTheDocument();
   });
 
-  it("expands a nested section in place", async () => {
+  it("closes the menu after a section link is tapped", async () => {
     const user = userEvent.setup();
-    renderNav();
+    const bio = addSection("bio");
+    vi.spyOn(bio, "scrollIntoView").mockImplementation(() => {});
+
+    render(<TopNav />);
     const mobile = within(mobileNav());
 
     await user.click(mobile.getByRole("button", { name: "Open menu" }));
-    expect(mobile.queryByText("PHOTOS")).toBeNull();
-
-    await user.click(mobile.getByText("GALLERY"));
-    expect(mobile.getByText("PHOTOS").closest("a")).toHaveAttribute(
-      "href",
-      "/gallery/photos"
-    );
-    expect(mobile.getByText("VIDEOS")).toBeInTheDocument();
-  });
-
-  it("closes the whole menu when a nested link is tapped", async () => {
-    const user = userEvent.setup();
-    renderNav();
-    const mobile = within(mobileNav());
-
-    await user.click(mobile.getByRole("button", { name: "Open menu" }));
-    await user.click(mobile.getByText("GALLERY"));
-    await user.click(mobile.getByText("PHOTOS"));
+    await user.click(mobile.getByText("ABOUT"));
 
     expect(mobile.queryByText("HOME")).toBeNull();
   });
