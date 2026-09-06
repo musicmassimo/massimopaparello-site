@@ -42,16 +42,14 @@ const navItems: NavEntry[] = [
 
 const linkFont = {
   fontSize: 13,
-  // Silkscreen only ships 400 and 700; 700 is the heaviest the face offers.
   fontWeight: 700,
   letterSpacing: "0.18em",
   textTransform: "uppercase" as const,
   textDecoration: "none",
   fontFamily: "'Silkscreen', cursive",
-  // Push the strokes past Silkscreen's 700 ceiling: a hairline text-stroke in
-  // the text colour thickens the pixel blocks evenly without blurring them or
-  // touching the letterforms. Kept sub-pixel so the counters stay open.
-  WebkitTextStroke: "0.6px currentColor",
+  // Silkscreen tops out at 700; a 1px white text-stroke thickens the pixel
+  // blocks past that while staying crisp.
+  WebkitTextStroke: "1px #fff",
 };
 
 // Both states are solid white; active vs. inactive is carried by weight/route,
