@@ -41,7 +41,7 @@ const navItems: NavEntry[] = [
 ];
 
 const linkFont = {
-  fontSize: 11,
+  fontSize: 13,
   // Silkscreen 400 (not 700) so a dense row of tiny caps doesn't read heavier
   // than the weight-700 "MASSIMO PAPARELLO" name it sits under on the hero.
   fontWeight: 400,
@@ -51,10 +51,10 @@ const linkFont = {
   fontFamily: "'Silkscreen', cursive",
 };
 
-// The name renders as solid white; the nav is pulled well below that so the
-// links stay visually subordinate to it rather than competing.
-const ACTIVE = "rgba(255,255,255,0.9)";
-const INACTIVE = "rgba(255,255,255,0.5)";
+// Both states are solid white; active vs. inactive is carried by weight/route,
+// not opacity, so the links stay legible over the bright hero photo.
+const ACTIVE = "#fff";
+const INACTIVE = "#fff";
 const PANEL_BG = "#000";
 const PANEL_BORDER = "1px solid rgba(255,255,255,0.1)";
 const ITEM_DIVIDER = "1px solid rgba(255,255,255,0.08)";
