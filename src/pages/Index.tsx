@@ -34,71 +34,81 @@ const socialLinks: { label: string; href: string; Icon: ComponentType<LucideProp
   { label: "TikTok", href: "https://www.tiktok.com/@massimo.paparello", Icon: TikTok },
 ]
 
-// One continuously-scrolling homepage: the hero, then each former route folded
-// in as an opaque black section with an anchor id. The hero is a plain
-// `relative` block in normal flow, so once it scrolls off the top the sections
-// below (each `position: relative; z-index: 10; background: #000`) fully cover
-// it — nothing bleeds through.
+// One continuously-scrolling homepage. The hero photo is a FIXED full-viewport
+// background layer (`position: fixed; inset: 0; z-index: 0`) that never moves —
+// a parallax effect — with a fixed scrim on top of it for legibility. The hero
+// name/nav and every section (Shows, Bio, Gallery, Music, Inquiries) sit ABOVE
+// it (`position: relative; z-index: 10`) with translucent dark backgrounds, so
+// the photo stays visible behind everything as the page scrolls.
 const Index = () => {
   return (
     <>
-      <TopNav />
-
-      <header id="top" className="relative h-dvh w-full overflow-hidden bg-black">
-        {/* Full-bleed hero photo */}
+      {/* Fixed parallax background: photo + scrim, both pinned to the viewport
+          so they stay perfectly still while all content scrolls over them. */}
+      <div
+        aria-hidden="true"
+        style={{ position: "fixed", inset: 0, zIndex: 0, background: "#000", overflow: "hidden" }}
+      >
         <img
           src={publicAsset("images/massimo-12.jpg")}
-          alt="Massimo Paparello"
+          alt=""
           loading="eager"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
-
-        {/* Scrim: darker at top/bottom for legibility, clear through the middle */}
         <div
-          className="absolute inset-0"
           style={{
+            position: "absolute",
+            inset: 0,
             background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 28%, rgba(0,0,0,0.05) 65%, rgba(0,0,0,0.55) 100%)",
+              "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.28) 26%, rgba(0,0,0,0.28) 70%, rgba(0,0,0,0.62) 100%)",
           }}
         />
+      </div>
 
-        {/* Social icons + name, layered centered directly on the photo. The nav
-            is the fixed <TopNav /> above, so it stays visible while scrolling. */}
-        <div className="relative z-10 flex h-full flex-col items-center justify-center gap-7 px-6 text-center">
-          <div className="flex items-center gap-5">
-            {socialLinks.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="text-white/70 transition-opacity hover:opacity-80 hover:text-white"
-              >
-                <Icon size={16} strokeWidth={1.5} />
-              </a>
-            ))}
-          </div>
+      <TopNav />
 
-          <div>
-            <h1
-              className="text-white"
-              style={{
-                fontFamily: "'Silkscreen', cursive",
-                fontWeight: 700,
-                // Silkscreen is a blocky pixel face and runs much wider than the
-                // old serif, so the clamp min/slope are pulled down to keep
-                // "MASSIMO PAPARELLO" on one line down to ~360px viewports.
-                fontSize: "clamp(1.25rem, 5vw, 3rem)",
-                letterSpacing: "0.03em",
-                lineHeight: 1.05,
-                textTransform: "uppercase",
-              }}
+      <header
+        id="top"
+        className="relative z-10 flex min-h-dvh w-full flex-col items-center justify-center gap-7 px-6 text-center"
+      >
+        {/* Social icons + name, sitting directly over the fixed photo. */}
+        <div
+          className="flex items-center gap-5"
+          style={{ filter: "drop-shadow(0 1px 8px rgba(0,0,0,0.55))" }}
+        >
+          {socialLinks.map(({ label, href, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={label}
+              className="text-white/80 transition-opacity hover:opacity-100 hover:text-white"
             >
-              Massimo Paparello
-            </h1>
-          </div>
+              <Icon size={16} strokeWidth={1.5} />
+            </a>
+          ))}
+        </div>
+
+        <div>
+          <h1
+            className="text-white"
+            style={{
+              fontFamily: "'Silkscreen', cursive",
+              fontWeight: 700,
+              // Silkscreen is a blocky pixel face and runs much wider than the
+              // old serif, so the clamp min/slope are pulled down to keep
+              // "MASSIMO PAPARELLO" on one line down to ~360px viewports.
+              fontSize: "clamp(1.25rem, 5vw, 3rem)",
+              letterSpacing: "0.03em",
+              lineHeight: 1.05,
+              textTransform: "uppercase",
+              textShadow: "0 2px 22px rgba(0,0,0,0.55)",
+            }}
+          >
+            Massimo Paparello
+          </h1>
         </div>
       </header>
 
@@ -111,15 +121,15 @@ const Index = () => {
       <footer
         className="relative z-10"
         style={{
-          background: "#000",
-          color: "rgba(255,255,255,0.3)",
+          background: "rgba(0,0,0,0.58)",
+          color: "rgba(255,255,255,0.4)",
           fontFamily: "'Space Grotesk', monospace",
           padding: "40px 24px",
           textAlign: "center",
           fontSize: 10,
           letterSpacing: "0.2em",
           textTransform: "uppercase",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
         }}
       >
         © 2026 Massimo Paparello. All rights reserved.

@@ -157,13 +157,13 @@ const TopNav = () => {
       ref={navRef}
       className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center h-[44px]"
       style={{
-        // Opaque-ish bar so section headings scroll cleanly BEHIND the fixed
-        // nav instead of colliding with it; over the hero this blends into the
-        // existing top scrim.
-        background: "rgba(0,0,0,0.9)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        // Semi-transparent bar so the fixed hero photo still reads behind it;
+        // the blur keeps the nav labels and any content scrolling underneath
+        // legible.
+        background: "rgba(0,0,0,0.5)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottom: "1px solid rgba(255,255,255,0.1)",
       }}
     >
       {/* Desktop / tablet (>= 768px): a horizontal row of anchors */}

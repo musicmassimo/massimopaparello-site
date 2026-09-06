@@ -36,7 +36,7 @@ const ShowsSection = () => {
         <h2 style={sectionHeading}>Shows</h2>
 
         {shows.length === 0 && (
-          <p style={{ fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+          <p style={{ fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
             No shows currently booked — check back soon.
           </p>
         )}
@@ -47,8 +47,8 @@ const ShowsSection = () => {
             className="flex items-center gap-4"
             style={{
               padding: "18px 0",
-              borderTop: "1px solid rgba(255,255,255,0.15)",
-              opacity: hovered === i ? 1 : 0.75,
+              borderTop: "1px solid rgba(255,255,255,0.18)",
+              opacity: hovered === i ? 1 : 0.85,
               transition: "opacity 0.2s ease",
             }}
             onMouseEnter={() => setHovered(i)}
@@ -58,13 +58,13 @@ const ShowsSection = () => {
               <p style={{ fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase" }}>
                 {d.city ? `${d.venue} · ${d.city}` : d.venue}
               </p>
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em" }}>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", letterSpacing: "0.15em" }}>
                 {d.time ? `${d.date} · ${d.time}` : d.date}
               </span>
               {d.note && (
                 <span
                   className="block"
-                  style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em", textTransform: "uppercase" }}
+                  style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", letterSpacing: "0.15em", textTransform: "uppercase" }}
                 >
                   {d.note}
                 </span>
@@ -85,7 +85,7 @@ const ShowsSection = () => {
           </div>
         ))}
 
-        {shows.length > 0 && <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }} />}
+        {shows.length > 0 && <div style={{ borderTop: "1px solid rgba(255,255,255,0.18)" }} />}
       </div>
     </section>
   );

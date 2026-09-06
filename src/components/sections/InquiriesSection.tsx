@@ -21,16 +21,16 @@ const socials = [
 ];
 
 const s = {
-  label: { fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.4)" },
-  row: { fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.7)", transition: "opacity 0.3s", cursor: "default" },
+  label: { fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.55)" },
+  row: { fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.85)", transition: "opacity 0.3s", cursor: "default" },
 };
 
 const HoverRow = ({ children, style, onClick, className }: { children: React.ReactNode; style?: React.CSSProperties; onClick?: () => void; className?: string }) => (
   <div
     className={className}
-    style={{ ...s.row, opacity: 0.7, ...style }}
+    style={{ ...s.row, opacity: 0.85, ...style }}
     onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-    onMouseLeave={e => (e.currentTarget.style.opacity = "0.7")}
+    onMouseLeave={e => (e.currentTarget.style.opacity = "0.85")}
     onClick={onClick}
   >
     {children}
@@ -63,9 +63,9 @@ const rowCss = `
 
 const field: React.CSSProperties = {
   width: "100%",
-  background: "transparent",
+  background: "rgba(0,0,0,0.25)",
   border: 0,
-  borderBottom: "1px solid rgba(255,255,255,0.4)",
+  borderBottom: "1px solid rgba(255,255,255,0.5)",
   color: "#fff",
   fontFamily: "'Space Grotesk', monospace",
   fontSize: 13,
@@ -79,12 +79,12 @@ const fieldLabel: React.CSSProperties = {
   fontSize: 10,
   letterSpacing: "0.3em",
   textTransform: "uppercase",
-  color: "rgba(255,255,255,0.4)",
+  color: "rgba(255,255,255,0.55)",
   marginBottom: 10,
 };
 
 const subGroup: React.CSSProperties = {
-  borderTop: "1px solid rgba(255,255,255,0.08)",
+  borderTop: "1px solid rgba(255,255,255,0.1)",
   marginTop: 60,
   paddingTop: 60,
 };
@@ -177,7 +177,7 @@ const ContactForm = () => {
           rows={5}
           style={{
             ...field,
-            border: "1px solid rgba(255,255,255,0.2)",
+            border: "1px solid rgba(255,255,255,0.3)",
             padding: 12,
             minHeight: 120,
             resize: "vertical",

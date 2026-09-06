@@ -18,9 +18,9 @@ const BioSection = () => (
         {bioLines.map((line, i) => (
           <p
             key={i}
-            style={{ lineHeight: 1.8, color: "rgba(255,255,255,0.7)", transition: "color 0.3s" }}
+            style={{ lineHeight: 1.8, color: "rgba(255,255,255,0.82)", transition: "color 0.3s" }}
             onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.82)")}
           >
             {line}
           </p>

@@ -37,7 +37,7 @@ const MusicSection = () => (
         title="Featured: trumpet performance"
       />
 
-      <p style={{ marginTop: 48, color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
+      <p style={{ marginTop: 48, color: "rgba(255,255,255,0.8)", lineHeight: 1.7 }}>
         Recordings and releases are on the way. In the meantime, watch more live sets and hear more of Massimo on{" "}
         <a
           href="https://youtube.com/@massimopaparello0213"
