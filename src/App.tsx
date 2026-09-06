@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { toRouterBasename } from "@/lib/routerBasename";
 
 // The landing page stays eagerly imported: it is the most common entry point
 // and its intro animation is timed from first paint, so a Suspense fallback
@@ -22,6 +23,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
+// vite.config.ts's `base` — "/" in a normal build, "/preview/" when the
+// Hostinger preview workflow sets VITE_BASE_PATH. Vite emits it with a
+// trailing slash; React Router's `basename` must not have one. See
+// toRouterBasename for why a stray slash renders the app blank at "/preview".
+const ROUTER_BASENAME = toRouterBasename(import.meta.env.BASE_URL);
+
 // Black rather than the browser default, so a chunk fetch doesn't flash white
 // against this site's dark pages.
 const RouteFallback = () => (
@@ -33,10 +40,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* import.meta.env.BASE_URL mirrors vite.config.ts's `base` — "/" in a
-          normal build, "/preview/" when the Hostinger preview workflow sets
-          VITE_BASE_PATH, so links and routes resolve correctly either way. */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={ROUTER_BASENAME}>
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Index />} />
