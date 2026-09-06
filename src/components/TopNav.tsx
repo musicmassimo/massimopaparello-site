@@ -42,15 +42,19 @@ const navItems: NavEntry[] = [
 
 const linkFont = {
   fontSize: 11,
-  fontWeight: 700,
+  // Silkscreen 400 (not 700) so a dense row of tiny caps doesn't read heavier
+  // than the weight-700 "MASSIMO PAPARELLO" name it sits under on the hero.
+  fontWeight: 400,
   letterSpacing: "0.18em",
   textTransform: "uppercase" as const,
   textDecoration: "none",
   fontFamily: "'Silkscreen', cursive",
 };
 
-const ACTIVE = "#fff";
-const INACTIVE = "rgba(255,255,255,0.7)";
+// The name renders as solid white; the nav is pulled well below that so the
+// links stay visually subordinate to it rather than competing.
+const ACTIVE = "rgba(255,255,255,0.9)";
+const INACTIVE = "rgba(255,255,255,0.5)";
 const PANEL_BG = "#000";
 const PANEL_BORDER = "1px solid rgba(255,255,255,0.1)";
 const ITEM_DIVIDER = "1px solid rgba(255,255,255,0.08)";

@@ -62,17 +62,6 @@ const Index = () => {
           >
             Massimo Paparello
           </h1>
-          <p
-            className="mt-3 text-white/70"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 11,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-            }}
-          >
-            Trumpet — Los Angeles
-          </p>
         </div>
 
         <TopNav layout="inline" />
