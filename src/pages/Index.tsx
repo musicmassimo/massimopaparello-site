@@ -12,7 +12,7 @@ const Index = () => {
     <div className="relative h-dvh w-full overflow-hidden bg-black">
       {/* Full-bleed hero photo */}
       <img
-        src={publicAsset("images/massimo-02.jpg")}
+        src={publicAsset("images/massimo-12.jpg")}
         alt="Massimo Paparello"
         loading="eager"
         decoding="async"
