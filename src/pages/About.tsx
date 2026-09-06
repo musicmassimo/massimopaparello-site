@@ -1,6 +1,7 @@
 import TopNav from "@/components/TopNav";
+import { publicAsset } from "@/lib/asset";
 // Real photo, uploaded to /public/images by Massimo — not a Lovable CDN asset.
-const portraitImg = "/images/massimo-08.jpg";
+const portraitImg = publicAsset("images/massimo-08.jpg");
 
 const bioLines = [
   "Born and raised in Los Angeles, CA, trumpeter Massimo Paparello brings nearly two decades of performance experience across jazz, soul, funk, pop, R&B, indie, and hip hop. He holds a Bachelor's and Master's degree in Jazz Performance from the New England Conservatory in Boston. His mentors include Jason Palmer, Jason Moran, and Cecil McBee.",

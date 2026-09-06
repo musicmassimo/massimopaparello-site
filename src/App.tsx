@@ -33,7 +33,10 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* import.meta.env.BASE_URL mirrors vite.config.ts's `base` — "/" in a
+          normal build, "/preview/" when the Hostinger preview workflow sets
+          VITE_BASE_PATH, so links and routes resolve correctly either way. */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Index />} />

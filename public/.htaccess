@@ -1,0 +1,11 @@
+# SPA fallback for the /preview staging deploy: any request that isn't a
+# real file or directory gets served index.html so React Router can handle
+# the route client-side. Scoped to /preview/ to match the Hostinger FTP
+# account's directory — update RewriteBase if this ever moves.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /preview/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>

@@ -1,4 +1,5 @@
 import TopNav from "@/components/TopNav";
+import { publicAsset } from "@/lib/asset";
 
 const contacts = [
   { label: "General, Bookings & Teaching", value: "massimo@massimopaparello.com", href: "mailto:massimo@massimopaparello.com" },
@@ -64,7 +65,7 @@ const Inquiries = () => {
       {/* Header banner */}
       <section style={{ position: "relative", height: "60vh", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <img
-          src="/images/massimo-11.jpg"
+          src={publicAsset("images/massimo-11.jpg")}
           alt="Massimo Paparello"
           loading="eager"
           decoding="async"

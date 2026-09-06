@@ -1,5 +1,6 @@
 import { Instagram, Youtube } from "lucide-react"
 import TopNav from "@/components/TopNav"
+import { publicAsset } from "@/lib/asset"
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/musicmassimo/", Icon: Instagram },
@@ -11,7 +12,7 @@ const Index = () => {
     <div className="relative h-dvh w-full overflow-hidden bg-black">
       {/* Full-bleed hero photo */}
       <img
-        src="/images/massimo-02.jpg"
+        src={publicAsset("images/massimo-02.jpg")}
         alt="Massimo Paparello"
         loading="eager"
         decoding="async"

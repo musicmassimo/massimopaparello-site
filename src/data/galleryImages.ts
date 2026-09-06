@@ -1,5 +1,7 @@
 // Photos of Massimo Paparello
 
+import { publicAsset } from "@/lib/asset"
+
 export interface MediaItem {
   src: string
   width: number
@@ -10,55 +12,55 @@ export interface MediaItem {
 
 export const galleryImages: MediaItem[] = [
   {
-    src: "/images/massimo-06.jpg",
+    src: publicAsset("images/massimo-06.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-02.jpg",
+    src: publicAsset("images/massimo-02.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-03.jpg",
+    src: publicAsset("images/massimo-03.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-04.jpg",
+    src: publicAsset("images/massimo-04.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-05.jpg",
+    src: publicAsset("images/massimo-05.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-01.jpg",
+    src: publicAsset("images/massimo-01.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-07.jpg",
+    src: publicAsset("images/massimo-07.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-09.jpg",
+    src: publicAsset("images/massimo-09.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
   },
   {
-    src: "/images/massimo-10.jpg",
+    src: publicAsset("images/massimo-10.jpg"),
     width: 4,
     height: 5,
     alt: "Massimo Paparello",
