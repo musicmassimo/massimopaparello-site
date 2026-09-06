@@ -42,13 +42,16 @@ const navItems: NavEntry[] = [
 
 const linkFont = {
   fontSize: 13,
-  // Silkscreen 400 (not 700) so a dense row of tiny caps doesn't read heavier
-  // than the weight-700 "MASSIMO PAPARELLO" name it sits under on the hero.
-  fontWeight: 400,
+  // Silkscreen only ships 400 and 700; 700 is the heaviest the face offers.
+  fontWeight: 700,
   letterSpacing: "0.18em",
   textTransform: "uppercase" as const,
   textDecoration: "none",
   fontFamily: "'Silkscreen', cursive",
+  // Push the strokes past Silkscreen's 700 ceiling: a hairline text-stroke in
+  // the text colour thickens the pixel blocks evenly without blurring them or
+  // touching the letterforms. Kept sub-pixel so the counters stay open.
+  WebkitTextStroke: "0.6px currentColor",
 };
 
 // Both states are solid white; active vs. inactive is carried by weight/route,
