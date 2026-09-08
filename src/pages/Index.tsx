@@ -170,7 +170,7 @@ const Index = () => {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className="text-white/80 transition-opacity hover:opacity-100 hover:text-white"
+              className="text-white/80 transition duration-200 ease-out hover:-translate-y-1 hover:opacity-100 hover:text-white hover:drop-shadow-[0_5px_8px_rgba(0,0,0,0.55)]"
             >
               <Icon size={16} strokeWidth={1.5} />
             </a>
