@@ -1,5 +1,5 @@
 import type { ComponentType } from "react"
-import { Instagram, Youtube, type LucideProps } from "lucide-react"
+import { Instagram, Youtube, Facebook, type LucideProps } from "lucide-react"
 import TopNav from "@/components/TopNav"
 import { publicAsset } from "@/lib/asset"
 import ShowsSection from "@/components/sections/ShowsSection"
@@ -32,6 +32,7 @@ const socialLinks: { label: string; href: string; Icon: ComponentType<LucideProp
   { label: "Instagram", href: "https://www.instagram.com/musicmassimo/", Icon: Instagram },
   { label: "YouTube", href: "https://youtube.com/@massimopaparello0213", Icon: Youtube },
   { label: "TikTok", href: "https://www.tiktok.com/@massimo.paparello", Icon: TikTok },
+  { label: "Facebook", href: "https://www.facebook.com/orangefoot13/", Icon: Facebook },
 ]
 
 // One continuously-scrolling homepage. The hero photo is a FIXED full-viewport
