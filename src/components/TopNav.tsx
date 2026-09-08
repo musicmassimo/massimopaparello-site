@@ -27,6 +27,7 @@ const navItems: NavItem[] = [
   { label: "MUSIC", anchor: "music" },
   { label: "GALLERY", anchor: "gallery" },
   { label: "LIVE", anchor: "shows" },
+  { label: "TEACHING", href: "https://massimopaparello.com", external: true },
   { label: "INQUIRIES", anchor: "inquiries" },
 ];
 

@@ -34,9 +34,11 @@ describe("TopNav — structure", () => {
     }
   });
 
-  it("no longer renders the removed TEACHING entry", () => {
+  it("renders TEACHING as a plain external anchor (full page navigation, not client routing)", () => {
     render(<TopNav />);
-    expect(within(desktopNav()).queryByText("TEACHING")).toBeNull();
+    const link = within(desktopNav()).getByText("TEACHING");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "https://massimopaparello.com");
   });
 });
 
