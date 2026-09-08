@@ -109,3 +109,17 @@ html {
   /* Offset anchored sections so their tops clear the fixed 44px TopNav. */
   scroll-padding-top: 64px;
 }
+
+/* One-shot entrance for the hero name: fade in while floating up into place. */
+@keyframes name-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.name-enter {
+  animation: name-enter 600ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-enter { animation: none; }
+}

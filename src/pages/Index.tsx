@@ -94,7 +94,7 @@ const Index = () => {
 
         <div>
           <h1
-            className="text-white"
+            className="text-white name-enter"
             style={{
               fontFamily: "'Silkscreen', cursive",
               fontWeight: 700,
