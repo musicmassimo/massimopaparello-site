@@ -75,7 +75,7 @@ const Index = () => {
       >
         {/* Social icons + name, sitting directly over the fixed photo. */}
         <div
-          className="flex items-center gap-5"
+          className="flex items-center gap-6"
           style={{ filter: "drop-shadow(0 1px 8px rgba(0,0,0,0.55))" }}
         >
           {socialLinks.map(({ label, href, Icon }) => (
@@ -87,7 +87,7 @@ const Index = () => {
               aria-label={label}
               className="text-white/80 transition duration-200 ease-out hover:-translate-y-1 hover:opacity-100 hover:text-white hover:drop-shadow-[0_5px_8px_rgba(0,0,0,0.55)]"
             >
-              <Icon size={16} strokeWidth={1.5} />
+              <Icon size={20} strokeWidth={1.5} />
             </a>
           ))}
         </div>
