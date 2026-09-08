@@ -123,3 +123,12 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .name-enter { animation: none; }
 }
+
+/* Site-wide: every text element uses the homepage title face (Silkscreen).
+   `!important` + universal selector overrides the per-component inline
+   `fontFamily` styles (TopNav, sections, footer) and Tailwind's font-* classes
+   in one place. Only font-family is affected — sizes, weights, colours and
+   spacing are left to each element's own rules. */
+*, *::before, *::after {
+  font-family: 'Silkscreen', cursive !important;
+}
