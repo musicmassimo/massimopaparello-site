@@ -94,14 +94,13 @@ const Index = () => {
 
         <div>
           <h1
-            className="text-white name-breathe"
+            className="text-white"
             style={{
-              fontFamily: "'Fraunces', serif",
+              fontFamily: "'Silkscreen', cursive",
               fontWeight: 700,
-              // Kept from the Silkscreen era: this clamp was tuned conservatively
-              // to hold "MASSIMO PAPARELLO" on one line down to ~360px viewports.
-              // clamp(10vw, 20vw, 50vh) would blow the hero layout, so the name
-              // keeps its existing size and only gains the breathing wght anim.
+              // Silkscreen is a blocky pixel face and runs much wider than the
+              // old serif, so the clamp min/slope are pulled down to keep
+              // "MASSIMO PAPARELLO" on one line down to ~360px viewports.
               fontSize: "clamp(1.25rem, 5vw, 3rem)",
               letterSpacing: "0.03em",
               lineHeight: 1.05,

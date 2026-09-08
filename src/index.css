@@ -3,7 +3,7 @@
    Weights are limited to the ones actually used in the codebase: 400 (body),
    500 (font-medium), 600 (font-semibold) and 700 (font-bold). Nothing uses
    font-thin (100) or font-light (300), so those are not requested. */
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:wght@300..800&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Silkscreen:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -108,23 +108,4 @@ html {
      scrolling in Chromium, so the CSS keyword is deliberately omitted. */
   /* Offset anchored sections so their tops clear the fixed 44px TopNav. */
   scroll-padding-top: 64px;
-}
-
-/* Continuous "breathing" of the hero name by animating the Fraunces variable
-   font's wght axis. Animation approach from Type Forward's public-domain
-   "Breathe animation" CodePen (technique only, not their font). */
-@keyframes letter-breathe {
-  from, to { font-variation-settings: 'wght' 300; }
-  50%      { font-variation-settings: 'wght' 800; }
-}
-
-.name-breathe {
-  animation: letter-breathe 3s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .name-breathe {
-    animation: none;
-    font-variation-settings: 'wght' 500;
-  }
 }
